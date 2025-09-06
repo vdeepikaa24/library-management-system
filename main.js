@@ -7,17 +7,21 @@ app.get('/', (req, res) => {
     res.json({ msg: "Welcome" });
 });
 
-//For fetching books
+// Fetch all books (with optional sort & search)
 app.get('/books', () => {});
 
-//For creating books
+// Fetch a single book by ID
+app.get('/books/:id', () => {});
+
+// Create a new book
 app.post('/books', () => {});
 
-//For updating books
+// Update a book by ID
 app.put('/books/:id', () => {});
 
-//For deleting books
+// Delete a book by ID
 app.delete('/books/:id', () => {});
+
 
 app.listen(PORT, () => {
     console.log(`The server is running at http://localhost:${PORT}`);
