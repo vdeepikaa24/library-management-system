@@ -1,31 +1,28 @@
 import express from "express";
+import {
+    BookIndex,
+    BookFetchSingle,
+    BookCreate,
+    BookUpdate,
+    BookDelete,
+} from "../controllers/books.controller";
 
 const router = express.Router();
 
-// /books//books
+
 // Fetch all books (with optional sort & search)
-router.get("/", (req, res) => {
-    res.send("Fetch all books");
-});
+router.get("/", BookIndex);
 
 // Fetch a single book by ID
-router.get("/:id", (req, res) => {
-    res.send("Fetch a single book by ID");
-});
+router.get("/:id", BookFetchSingle);
 
 // Create a new book
-router.post("/", (req, res) => {
-    res.send("Create a new book");
-});
+router.post("/", BookCreate);
 
 // Update a book by ID
-router.put("/:id", (req, res) => {
-    res.send("Update a book by ID");
-});
+router.put("/:id", BookUpdate);
 
 // Delete a book by ID
-router.delete("/:id", (req, res) => {
-    res.send("Delete a book by ID");
-});
+router.delete("/:id", BookDelete);
 
 export default router;
