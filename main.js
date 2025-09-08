@@ -5,17 +5,19 @@ import connectDB from "./lib/db.js";
 const app = express();
 const PORT = 6969;
 
+//Data understanding middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
 //Connect DB
 connectDB();
 
-app.get('/', (req, res) => {
-    res.json({ msg: "Welcome!" });
+app.get("/", (req, res) => {
+  res.json({ msg: "Welcome!" });
 });
 
 // CLIENT -> MIDDLEWARE -> SERVER
 app.use("/books", bookRoutes);
 
-
 app.listen(PORT, () => {
-    console.log(`The server is running at http://localhost:${PORT}`);
+  console.log(`The server is running at http://localhost:${PORT}`);
 });
