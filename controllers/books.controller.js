@@ -25,9 +25,7 @@ export const BookFetchSingle = async (req, res) => {
 
 export const BookCreate = async (req, res) => {
   //title, author, year
-
   console.log(req.body);
-
   //   validate your data.
   const newBook = new Book({
     title: req.body.title,
@@ -62,6 +60,13 @@ export const BookUpdate = async (req, res) => {
   }
 };
 
-export const BookDelete = (req, res) => {
-  res.send("Delete a book by ID");
+export const BookDelete = async (req, res) => {
+  const bookId = req.params.id;
+  try {
+    await Book.deleteOne({ _id: bookId })
+      res.json({ message: "Book deleted!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+  res.send("Delete a book");
 };
