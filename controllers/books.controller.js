@@ -1,3 +1,5 @@
+import Book from "../models/book.model.js";
+
 export const BookIndex = (req, res) => {
   res.send("Fetch all books");
 };
@@ -6,14 +8,24 @@ export const BookFetchSingle = (req, res) => {
   res.send("Fetch a single book by ID");
 };
 
-export const BookCreate = (req, res) => {
+export const BookCreate = async (req, res) => {
   //title, author, year
 
   console.log(req.body);
 
-  return res.json(req.body);
+  //   validate your data.
+  const newBook = new Book({
+    title: req.body.title,
+    author: req.body.author,
+    year: req.body.year,
+  });
 
-  //Create the book info
+  try {
+    const book = await newBook.save();
+    return res.status(201).json(book);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 };
 
 export const BookUpdate = (req, res) => {
