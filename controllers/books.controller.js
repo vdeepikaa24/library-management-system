@@ -1,11 +1,26 @@
 import Book from "../models/book.model.js";
 
-export const BookIndex = (req, res) => {
-  res.send("Fetch all books");
+export const BookIndex = async (req, res) => {
+  try {
+    const books = await Book.find();
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-export const BookFetchSingle = (req, res) => {
-  res.send("Fetch a single book by ID");
+export const BookFetchSingle = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+
+    if (book == null) {
+      return res.status(404).json({ message: "Cannot find book" });
+    } else {
+      res.json(book);
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 export const BookCreate = async (req, res) => {
@@ -28,8 +43,23 @@ export const BookCreate = async (req, res) => {
   }
 };
 
-export const BookUpdate = (req, res) => {
-  res.send("Update a book by ID");
+export const BookUpdate = async (req, res) => {
+  try {
+    const updatedBook = await Book.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        title: req.body.title,
+        author: req.body.author,
+        year: req.body.year,
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(updatedBook);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
 export const BookDelete = (req, res) => {
